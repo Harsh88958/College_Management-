@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}
+        Staff Dashboard
+      
+    {% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/staff.css' %}">
+    
+</head>
+<body>
+
+<div class="header">
+    <h1>Student Management System || Staff Dashboard</h1>
+    <a href="{% url 'custom_logout' %}" class="logout">Logout</a>
+</div>
+
+<div class="navbar">
+    <a href="#home">Home</a>
+    <a href="{% url 'add_student' %}">Take Attendance</a>
+    <a href="{% url 'manage_staff' %}">View Updated Attendance</a>
+    <a href="{% url 'add_result' %}">Add Result</a>
+    <a href="{% url 'teacher_leave' %}">Apply Leave</a>
+    <a href="{% url 'teacher_feedback' %}">Feedback</a>
+   
+    <a href="#settings">Settings</a>
+</div>
+
+{% block content %}
+  
+{% endblock content %}
+
+
+
+</body>
+</html>

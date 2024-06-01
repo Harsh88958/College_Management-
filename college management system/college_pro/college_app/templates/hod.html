@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}
+        HOD Dashboard
+    {% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/hod.css' %}">
+    <style>
+        .navbar {
+            max-height: 100vh; /* Adjust this value as needed */
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Student Management System</h1>
+    <a href="{% url 'custom_logout' %}" class="logout">Logout</a>
+</div>
+
+<div class="navbar">
+    <a href="#home">Home</a>
+    <a href="{% url 'manage_student' %}">Manage Students</a>
+    <a href="{% url 'add_student' %}">Add Students</a>
+    <a href="{% url 'manage_staff' %}">Manage Staff</a>
+    <a href="{% url 'add_staff' %}">Add Staffs</a>
+    <a href="{% url 'manage_course' %}">Manage Courses</a>
+    <a href="{% url 'add_course' %}">Add Courses</a>
+    <a href="{% url 'manage_session' %}">Manage Session</a>
+    <a href="{% url 'add_session' %}">Add Session</a>
+    <a href="{% url 'manage_subject' %}">Manage Subject</a>
+    <a href="{% url 'add_subject' %}">Add Subject</a>
+    <a href="{% url 'student_feedback' %}">Student Feedback</a>
+    <a href="{% url 'staff_feedback' %}">Staff Feedback</a>
+    <a href="{% url 'student_leave' %}">Student Leave</a>
+    <a href="{% url 'staff_leave' %}">Staff Leave</a>
+    <a href="#settings">Settings</a>
+</div>
+
+{% block content %}
+  
+{% endblock content %}
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+{% extends "hod.html" %}
+{% load static %}
+{% block title %} Add Subject {% endblock title %}
+{% block content %}
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .content {
+            width: 85%;
+            margin: 65px 0 0 220px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .student-table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .student-table-header h2 {
+            margin: 0;
+            font-weight: normal;
+        }
+
+        .leave-history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .leave-history-table th,
+        .leave-history-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .leave-history-table th {
+            background-color: #26a69a;
+            color: white;
+            text-align: left;
+        }
+
+        .leave-history-table td {
+            background-color: #f9f9f9;
+        }
+
+        .btn-edit, .btn-save, .btn-delete {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            margin: 5px;
+        }
+
+        .btn-edit {
+            background-color: #198754;
+            color: #fff;
+        }
+
+        .btn-edit:hover {
+            background-color: #157347;
+        }
+
+        .btn-save {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-save:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .form-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit_course {
+            width: calc(100% - 130px); /* Adjusting width to fit within table cell */
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+            resize: vertical;
+        }
+
+        .form-container form {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <!-- Table header for feedback history -->
+        <div class="student-table-header">
+            <h2>Feedback History</h2>
+        </div>
+        <!-- Feedback history table -->
+        <table class="leave-history-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Student Session</th>
+                    <th>Feedback Message</th>
+                    <th>Sended On</th>
+                    <th>Feedback Reply</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in leave_obj %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.student_id.student_id }}</td>
+                    <td>{{ i.student_id.admin.username }}</td>
+                    <td>{{ i.student_id.session_year_id.session_start_year }} || {{ i.student_id.session_year_id.session_last_year }}</td>
+                    <td>{{ i.feedback }}</td>
+                    <td>{{ i.created_at }}</td>
+                    <td style="text-align: center;">
+                        {% if leave_edit and leave_edit.id == i.id %}
+                            <div class="form-container">
+                                <form method="post" action="{% url 'save_leave' i.feedback_id %}">
+                                    {% csrf_token %}
+                                    <textarea rows="5" cols="50" class="edit_course" name="feedback_reply" placeholder="Enter your reply"></textarea>
+                                    <button class="btn-save" type="submit">Send</button>
+                                </form>
+                                <a class="btn-delete" href="{% url 'student_feedback' %}">Cancel</a>
+                            </div>
+                        {% else %}
+                            {% if i.feedback_reply %}
+                                {{ i.feedback_reply }}
+                            {% else %}
+                                <a class="btn-edit" href="{% url 'edit_leave' i.feedback_id %}">Reply</a>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock content %}
